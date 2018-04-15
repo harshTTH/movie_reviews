@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from "axios";
 import {Link} from 'react-router-dom';
 import {Menu,Button,Modal,Icon,Dropdown} from 'semantic-ui-react';
 import LoginForm from './LoginForm';
@@ -68,7 +67,7 @@ class Header extends React.Component{
                     <Menu.Item position="right">
                         {this.state.newUser ? (
                             <div>
-                                <Modal size="tiny" dimmer="blurring" trigger={<Button>Login</Button>}>
+                                <Modal size="tiny" dimmer="blurring" trigger={<Button onClick={()=>this.setState({loading:false})}>Login</Button>}>
                                     <Modal.Header>
                                         <Icon name="lock" size="large"/>
                                         Login
@@ -82,7 +81,7 @@ class Header extends React.Component{
                                             handleSubmit={this.handleSubmit.bind(null,1)}/>
                                     </Modal.Content>
                                 </Modal>
-                                <Modal size="tiny" dimmer="blurring" trigger={<Button>Signup</Button>}>
+                                <Modal size="tiny" dimmer="blurring" trigger={<Button onClick={()=>this.setState({loading:false})}>Signup</Button>}>
                                     <Modal.Header>
                                         <Icon name="user circle" size="large"/>
                                         Signup

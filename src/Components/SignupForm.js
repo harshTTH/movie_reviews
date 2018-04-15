@@ -1,6 +1,5 @@
 import React from 'react';
 import  {Form, Button} from 'semantic-ui-react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 
 const SignupForm  = (props) => (

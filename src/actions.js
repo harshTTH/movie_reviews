@@ -26,6 +26,17 @@ const actions = {
                 return response.data;
             })
         );
+    },
+    fetchMovieIdList(){
+        return(
+            axios.get('./movies.php')
+            .then((response)=>response.data)
+        )
+    },
+    fetchMovie(id){
+        return(
+            axios.get(`http://www.theimdbapi.org/api/movie?movie_id=${id}`)
+        )
     }
 };
 
