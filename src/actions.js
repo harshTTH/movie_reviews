@@ -38,6 +38,11 @@ const actions = {
             axios.get(`http://www.theimdbapi.org/api/movie?movie_id=${id}`)
         )
     },
+    fetchDesc(id){
+        return(
+            axios.get('/desc.php',{id:id})
+        )
+    }
 };
 
 export default actions;

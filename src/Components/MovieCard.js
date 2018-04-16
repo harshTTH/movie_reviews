@@ -14,16 +14,16 @@ class MovieCard extends React.Component{
     componentWillMount(){
         actions.fetchMovie(this.props.id)
         .then(response=>{
-            this.setState({movie:response.data});
+            actions.fetchDesc(this.props.id)
+            .then(desc=>{
+                response.data.description = desc.data;
+                this.setState({movie:response.data});
+            })
         });
+
     }
 
     render(){
-        let {description} = this.state.movie;
-        if(this.state.movie){
-            if(description && description.length > 60)
-                description = description.substr(0,70) + '...';
-        }
         return(
             <Link to={`/movie/${this.props.id}`}>
             {this.state.movie.poster && <Card >
@@ -33,7 +33,7 @@ class MovieCard extends React.Component{
                    {this.state.movie.title}
                  </Card.Header>
                  <Card.Description>
-                   {description}
+                   {this.state.movie.description}
                  </Card.Description>
              </Card.Content>
          </Card>}
