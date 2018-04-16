@@ -9,6 +9,9 @@ const actions = {
                 password:credentials.password
             })
             .then((response)=>{
+                if(response.data){
+                    localStorage.setItem('mov_rev_wt',response.data);
+                }
                 initUser(response.data);
                 return response.data;
             })
@@ -42,6 +45,10 @@ const actions = {
         return(
             axios.get('/desc.php',{id:id})
         )
+    },
+    handleLogout(){
+        localStorage.removeItem('mov_rev_wt');
+        window.location.reload(true);
     }
 };
 

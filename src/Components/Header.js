@@ -4,21 +4,29 @@ import {Menu,Button,Modal,Icon,Dropdown} from 'semantic-ui-react';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import actions from '../actions';
-import {getUser} from '../store';
+import {getUser,initUser} from '../store';
 
 class Header extends React.Component{
     constructor(props){
         super(props);
+        let wt = localStorage.getItem('mov_rev_wt');
+        let user;
+        if(wt){
+            user = false;
+            initUser(wt);
+        }else user = true;
         this.state = {
-            newUser:true,
+            newUser:user,
             loading:false,
             email:"",
             password:"",
             name:""
         }
+        console.log(getUser())
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
     handleChange(event){
         switch(event.target.name){
             case "em":
@@ -99,9 +107,9 @@ class Header extends React.Component{
                             </div>
                         ):
                         (
-                            <Dropdown text={getUser()} icon="user circle" floating labeled button className='icon'>
+                            <Dropdown text={getUser().name} icon="user circle" floating labeled button className='icon'>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item icon='arrow left' text='Logout' />
+                                    <Dropdown.Item icon='arrow left' text='Logout' onClick={actions.handleLogout}/>
                                 </Dropdown.Menu>
                             </Dropdown>
                         )}

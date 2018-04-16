@@ -1,8 +1,8 @@
 import React from 'react';
 import {Container} from 'semantic-ui-react';
-import Header from '../Components/Header';
 import MoviesGrid from '../Components/MoviesGrid';
 import actions from '../actions';
+import {initUser} from '../store';
 
 class HomePage extends React.Component{
     constructor(props){
@@ -21,7 +21,6 @@ class HomePage extends React.Component{
     render(){
         return(
             <Container>
-                <Header/>
                 <MoviesGrid ids={this.state.ids}/>
             </Container>
         );
