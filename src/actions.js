@@ -37,7 +37,7 @@ const actions = {
         return(
             axios.get(`http://www.theimdbapi.org/api/movie?movie_id=${id}`)
         )
-    }
+    },
 };
 
 export default actions;

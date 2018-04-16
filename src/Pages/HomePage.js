@@ -13,7 +13,10 @@ class HomePage extends React.Component{
     }
     componentDidMount(){
         actions.fetchMovieIdList()
-        .then(response=>this.setState({ids:response.split(',')}));
+        .then(response=>{
+            console.log(response);
+            this.setState({ids:response.split(',')})
+        });
     }
     render(){
         return(
