@@ -1,26 +1,30 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Menu,Button,Modal,Icon,Dropdown} from 'semantic-ui-react';
+import {Menu,Button,Modal,Icon,Dropdown,Message} from 'semantic-ui-react';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import actions from '../actions';
 import {getUser,initUser} from '../store';
+import jwt from 'jsonwebtoken';
 
 class Header extends React.Component{
     constructor(props){
         super(props);
         let wt = localStorage.getItem('mov_rev_wt');
         let user;
-        if(wt){
+        if(wt && jwt.verify(wt,'abC123!')){
             user = false;
-            initUser(wt);
+            initUser(jwt.decode(wt));
         }else user = true;
         this.state = {
             newUser:user,
             loading:false,
             email:"",
             password:"",
-            name:""
+            name:"",
+            openLogin:false,
+            openSignup:false,
+            error:false
         }
         console.log(getUser())
         this.handleChange = this.handleChange.bind(this);
@@ -49,10 +53,19 @@ class Header extends React.Component{
                 password : this.state.password
             })
             .then((response)=>{
-                if(response)this.setState({
-                    newUser:false,
-                    loading:false
-                });
+                if(response){
+                    this.setState({
+                        newUser:false,
+                        loading:false,
+                        error:false
+                    });
+                }else {
+                    this.setState({
+                        loading:false,
+                        openLogin:true,
+                        error:true
+                    })
+                }
             })
         }
         else if(opt === 2){
@@ -62,7 +75,20 @@ class Header extends React.Component{
                 name:this.state.name
             })
             .then((response)=>{
-                if(response)this.setState({newUser:false});
+                if(response){
+                    this.setState({
+                        newUser:false,
+                        loading:false,
+                        error:false
+                    });
+                }
+                else {
+                    this.setState({
+                        loading:false,
+                        openSignup:true,
+                        error:true
+                    })
+                }
             })
         }
     }
@@ -74,37 +100,47 @@ class Header extends React.Component{
                     <Menu.Item name="Home" as={Link} to="/" />
                     <Menu.Item position="right">
                         {this.state.newUser ? (
-                            <div>
-                                <Modal size="tiny" dimmer="blurring" trigger={<Button onClick={()=>this.setState({loading:false})}>Login</Button>}>
-                                    <Modal.Header>
-                                        <Icon name="lock" size="large"/>
-                                        Login
-                                    </Modal.Header>
-                                    <Modal.Content>
-                                        <LoginForm
-                                            email={this.state.email}
-                                            pass={this.state.password}
-                                            loading={this.state.loading}
-                                            handleChange={this.handleChange}
-                                            handleSubmit={this.handleSubmit.bind(null,1)}/>
-                                    </Modal.Content>
-                                </Modal>
-                                <Modal size="tiny" dimmer="blurring" trigger={<Button onClick={()=>this.setState({loading:false})}>Signup</Button>}>
-                                    <Modal.Header>
-                                        <Icon name="user circle" size="large"/>
-                                        Signup
-                                    </Modal.Header>
-                                    <Modal.Content>
-                                        <SignupForm
-                                            email={this.state.email}
-                                            pass={this.state.password}
-                                            loading={this.state.loading}
-                                            name={this.state.name}
-                                            handleChange={this.handleChange}
-                                            handleSubmit={this.handleSubmit.bind(null,2)}/>
-                                    </Modal.Content>
-                                </Modal>
-                            </div>
+                        <div>
+                            <Modal
+                                trigger={<Button onClick={()=>this.setState({loading:false,openLogin:true})}>Login
+                                </Button>}
+                                open = {this.state.openLogin}
+                                onClose = {()=>this.setState({loading:false,openLogin:false})} size="tiny" dimmer="blurring">
+                                <Modal.Header>
+                                    <Icon name="lock" size="large"/>
+                                    Login
+                                </Modal.Header>
+                                {this.state.error && this.state.openLogin && <Message color="red" style={{margin:"2%"}}>Invalid Credentials</Message>}
+                                <Modal.Content>
+                                    <LoginForm
+                                        email={this.state.email}
+                                        pass={this.state.password}
+                                        loading={this.state.loading}
+                                        handleChange={this.handleChange}
+                                        handleSubmit={this.handleSubmit.bind(null,1)}/>
+                                </Modal.Content>
+                            </Modal>
+                            <Modal size="tiny"
+                                trigger = {<Button onClick={()=>this.setState({loading:false,openSignup:true})}>Signup
+                                </Button>}
+                                open = {this.state.openSignup}
+                                onClose = {()=>this.setState({loading:false,openSignup:false})} dimmer="blurring">
+                                <Modal.Header>
+                                    <Icon name="user circle" size="large"/>
+                                    Signup
+                                </Modal.Header>
+                                {this.state.error && this.state.openSignup && <Message color="red" style={{margin:"2%"}}>Account with this Email Already exists</Message>}
+                                <Modal.Content>
+                                    <SignupForm
+                                        email={this.state.email}
+                                        pass={this.state.password}
+                                        loading={this.state.loading}
+                                        name={this.state.name}
+                                        handleChange={this.handleChange}
+                                        handleSubmit={this.handleSubmit.bind(null,2)}/>
+                                </Modal.Content>
+                            </Modal>
+                        </div>
                         ):
                         (
                             <Dropdown text={getUser().name} icon="user circle" floating labeled button className='icon'>

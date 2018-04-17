@@ -1,6 +1,6 @@
 let user = {};
 export function initUser(userData){
-    user.name = userData;
+    user = userData;
 };
 
 export function getUser(){

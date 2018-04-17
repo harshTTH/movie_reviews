@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {initUser} from './store';
+import jwt from 'jsonwebtoken';
 
 const actions = {
     handleLogin(credentials){
@@ -9,10 +10,12 @@ const actions = {
                 password:credentials.password
             })
             .then((response)=>{
-                if(response.data){
+                console.log(response.data);
+                if(response.data && jwt.verify(response.data,'abC123!')){
                     localStorage.setItem('mov_rev_wt',response.data);
+                    let user = jwt.decode(response.data);
+                    initUser(user);
                 }
-                initUser(response.data);
                 return response.data;
             })
         );
@@ -25,7 +28,12 @@ const actions = {
                 name:credentials.name
             })
             .then((response)=>{
-                initUser(response.data);
+                if(response.data && jwt.verify(response.data,'abC123!')){
+                    localStorage.setItem('mov_rev_wt',response.data);
+                    let user = jwt.decode(response.data);
+                    console.log(user);
+                    initUser(user);
+                }
                 return response.data;
             })
         );
