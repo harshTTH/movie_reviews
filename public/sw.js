@@ -7,7 +7,8 @@ var urlsToCache = [
     'http://www.theimdbapi.org/api/movie?movie_id=tt0050083',
     'http://www.theimdbapi.org/api/movie?movie_id=tt0108052',
     'http://www.theimdbapi.org/api/movie?movie_id=tt0167260',
-    '/desc.php'
+    '/desc.php',
+    '/movies.php'
 ];
 
 self.addEventListener('install',(event)=>{

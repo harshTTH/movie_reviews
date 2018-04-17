@@ -15,7 +15,7 @@ class HomePage extends React.Component{
         actions.fetchMovieIdList()
         .then(response=>{
             console.log(response);
-            this.setState({ids:response.split(',')})
+            this.setState({ids:response})
         });
     }
     render(){

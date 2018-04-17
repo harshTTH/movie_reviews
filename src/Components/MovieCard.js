@@ -14,13 +14,19 @@ class MovieCard extends React.Component{
     componentWillMount(){
         actions.fetchMovie(this.props.id)
         .then(response=>{
-            actions.fetchDesc(this.props.id)
-            .then(desc=>{
-                response.data.description = desc.data;
-                this.setState({movie:response.data});
-            })
+            this.setState({movie:response.data});
         });
 
+    }
+
+    componentDidMount(){
+        actions.fetchDesc(this.props.id)
+        .then(desc=>{
+            this.setState((prvsState,props)=>{
+                prvsState.description = desc.data;
+                return prvsState;
+            })
+        })
     }
 
     render(){

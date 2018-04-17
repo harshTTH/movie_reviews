@@ -51,7 +51,7 @@ const actions = {
     },
     fetchDesc(id){
         return(
-            axios.get('/desc.php',{id:id})
+            axios.post('/desc.php',{id:id})
         )
     },
     handleLogout(){
