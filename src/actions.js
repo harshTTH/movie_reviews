@@ -57,6 +57,16 @@ const actions = {
     handleLogout(){
         localStorage.removeItem('mov_rev_wt');
         window.location.reload(true);
+    },
+    fetchReview(id){
+        return(
+            axios.post('/review.php',{id:id})
+        )
+    },
+    fetchComments(movieId){
+        return(
+            axios.post('/displayComments.php')
+        )
     }
 };
 
