@@ -10,8 +10,17 @@ class MoviePage extends React.Component{
         this.state = {
             movie:"",
             review:"",
-            comments:[]
+            comments:[],
+            comment:"",
+            notify:false
         }
+        this.handleChange = this.handleChange.bind(this);
+        this.sendComment = this.sendComment.bind(this);
+        this.changeNotify = this.changeNotify.bind(this);
+    }
+
+    changeNotify(e){
+        this.setState({notify:false})
     }
 
     componentDidMount(){
@@ -28,8 +37,30 @@ class MoviePage extends React.Component{
         .then((response)=>{
             this.setState({comments:response.data})
         })
+
+        if(localStorage.getItem('mov_rev_wt'))this.setState({notify:false});
+        else this.setState({notify:true});
+
+        document.addEventListener('notifyChange',this.changeNotify);
     }
 
+    handleChange(event){
+        this.setState({
+            comment:event.target.value
+        });
+    }
+
+    sendComment(){
+        const wt = localStorage.getItem('mov_rev_wt');
+        console.log(wt);
+        if(wt)
+            actions.sendComment(wt,this.props.match.params.movieId,this.state.comment)
+            .then(response=>{
+                if(response.data)window.location.reload(true);
+            })
+        else  this.setState({notify:true})
+
+    }
     render(){
         if(this.state.movie){
             var trailer = this.state.movie.trailer[0].videoUrl;
@@ -55,7 +86,10 @@ class MoviePage extends React.Component{
                     review={this.state.review}
                 />
                 <Comments
+                    handleChange={this.handleChange}
+                    sendComment={this.sendComment}
                     comments={this.state.comments}
+                    notify={this.state.notify}
                 />
             </Container>
         );

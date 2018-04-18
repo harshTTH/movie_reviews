@@ -7,6 +7,8 @@ import actions from '../actions';
 import {getUser,initUser} from '../store';
 import jwt from 'jsonwebtoken';
 
+var event = new CustomEvent("notifyChange", { "detail": "Example of an event" });
+
 class Header extends React.Component{
     constructor(props){
         super(props);
@@ -48,6 +50,7 @@ class Header extends React.Component{
     handleSubmit(opt){
         this.setState({loading:true});
         if(opt === 1){
+            console.log('logging in');
             actions.handleLogin({
                 email : this.state.email,
                 password : this.state.password
@@ -59,6 +62,7 @@ class Header extends React.Component{
                         loading:false,
                         error:false
                     });
+                    document.dispatchEvent(event);
                 }else {
                     this.setState({
                         loading:false,
@@ -69,6 +73,7 @@ class Header extends React.Component{
             })
         }
         else if(opt === 2){
+            console.log('signing up');
             actions.handleSignup({
                 email : this.state.email,
                 password : this.state.password,
@@ -81,6 +86,7 @@ class Header extends React.Component{
                         loading:false,
                         error:false
                     });
+                    document.dispatchEvent(event);
                 }
                 else {
                     this.setState({
@@ -105,7 +111,7 @@ class Header extends React.Component{
                                 trigger={<Button onClick={()=>this.setState({loading:false,openLogin:true})}>Login
                                 </Button>}
                                 open = {this.state.openLogin}
-                                onClose = {()=>this.setState({loading:false,openLogin:false})} size="tiny" dimmer="blurring">
+                                onClose = {()=>this.setState({loading:false,openLogin:false,error:false})} size="tiny" dimmer="blurring">
                                 <Modal.Header>
                                     <Icon name="lock" size="large"/>
                                     Login
@@ -124,7 +130,7 @@ class Header extends React.Component{
                                 trigger = {<Button onClick={()=>this.setState({loading:false,openSignup:true})}>Signup
                                 </Button>}
                                 open = {this.state.openSignup}
-                                onClose = {()=>this.setState({loading:false,openSignup:false})} dimmer="blurring">
+                                onClose = {()=>this.setState({loading:false,openSignup:false,error:false})} dimmer="blurring">
                                 <Modal.Header>
                                     <Icon name="user circle" size="large"/>
                                     Signup

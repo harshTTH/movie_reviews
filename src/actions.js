@@ -63,9 +63,16 @@ const actions = {
             axios.post('/review.php',{id:id})
         )
     },
-    fetchComments(movieId){
+    fetchComments(id){
         return(
-            axios.post('/displayComments.php')
+            axios.post('/displayComment.php',{id:id})
+        )
+    },
+    sendComment(jwt,id,comment){
+        return(
+            axios.post('/insertComment.php',{
+                id,jwt,comment
+            })
         )
     }
 };
