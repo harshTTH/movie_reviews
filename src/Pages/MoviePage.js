@@ -56,7 +56,12 @@ class MoviePage extends React.Component{
         if(wt)
             actions.sendComment(wt,this.props.match.params.movieId,this.state.comment)
             .then(response=>{
-                if(response.data)window.location.reload(true);
+                if(response.data){
+                    this.setState((prvsState,props) => {
+                        prvsState.comments.push(response.data);
+                        return {comments:prvsState.comments}
+                    })
+                }
             })
         else  this.setState({notify:true})
 

@@ -69,8 +69,7 @@ const MovieHeader = (props) => (
                             <Loader content="What are my views ?"/>
                         </Dimmer>
                     ):(
-                        <h4>
-                            {props.review}
+                        <h4 dangerouslySetInnerHTML = {{__html:props.review}}>
                         </h4>
                     )}
                 </Card.Content>

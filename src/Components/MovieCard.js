@@ -7,7 +7,8 @@ class MovieCard extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            movie:{}
+            movie:{},
+            desc:""
         };
     }
 
@@ -22,10 +23,7 @@ class MovieCard extends React.Component{
     componentDidMount(){
         actions.fetchDesc(this.props.id)
         .then(desc=>{
-            this.setState((prvsState,props)=>{
-                prvsState.description = desc.data;
-                return prvsState;
-            })
+            this.setState({desc:desc.data})
         })
     }
 
@@ -39,7 +37,7 @@ class MovieCard extends React.Component{
                    {this.state.movie.title}
                  </Card.Header>
                  <Card.Description>
-                   {this.state.movie.description}
+                   {this.state.desc}
                  </Card.Description>
              </Card.Content>
          </Card>}

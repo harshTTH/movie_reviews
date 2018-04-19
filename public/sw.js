@@ -1,14 +1,14 @@
 var CACHE_NAME = 'mov_re_stat_v1';
 var urlsToCache = [
     'http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css',
-    'http://www.theimdbapi.org/api/movie?movie_id=tt0468569',
     'http://www.theimdbapi.org/api/movie?movie_id=tt0111161',
     'http://www.theimdbapi.org/api/movie?movie_id=tt0068646',
-    'http://www.theimdbapi.org/api/movie?movie_id=tt0050083',
-    'http://www.theimdbapi.org/api/movie?movie_id=tt0108052',
-    'http://www.theimdbapi.org/api/movie?movie_id=tt0167260',
-    'http://www.theimdbapi.org/api/movie?movie_id=tt1375666',
-    '/desc.php',
+    'http://www.theimdbapi.org/api/movie?movie_id=tt0071562',
+    'http://www.theimdbapi.org/api/movie?movie_id=tt0110912',
+    'http://www.theimdbapi.org/api/movie?movie_id=tt0060196',
+    'http://www.theimdbapi.org/api/movie?movie_id=tt0137523',
+    'http://www.theimdbapi.org/api/movie?movie_id=tt0109830',
+    'http://www.theimdbapi.org/api/movie?movie_id=tt2582802',
     '/movies.php'
 ];
 
