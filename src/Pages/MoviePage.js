@@ -89,6 +89,7 @@ class MoviePage extends React.Component{
                     cast={cast}
                     writers={writers}
                     review={this.state.review}
+                    rating={this.props.match.params.rating}
                 />
                 <Comments
                     handleChange={this.handleChange}

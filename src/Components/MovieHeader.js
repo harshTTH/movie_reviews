@@ -17,7 +17,7 @@ const MovieHeader = (props) => (
                    </span>
                  </Card.Meta>
                </Card.Content>
-               <Card.Content extra>
+               <Card.Content>
                 <Modal
                     basic
                     trigger={<a>
@@ -31,6 +31,9 @@ const MovieHeader = (props) => (
                         </div>
                     </Modal.Content>
                 </Modal>
+               </Card.Content>
+               <Card.Content>
+                   <Icon name="star"/> {props.rating}
                </Card.Content>
             </Card>
         </Grid.Column>

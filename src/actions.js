@@ -15,6 +15,7 @@ const actions = {
                     localStorage.setItem('mov_rev_wt',response.data);
                     let user = jwt.decode(response.data);
                     initUser(user);
+                    window.location.reload(true);
                 }
                 return response.data;
             })
@@ -51,7 +52,7 @@ const actions = {
     },
     fetchDesc(id){
         return(
-            axios.post('/desc.php',{id:id})
+            axios.get(`/desc.php?id=${id}`)
         )
     },
     handleLogout(){
@@ -60,12 +61,12 @@ const actions = {
     },
     fetchReview(id){
         return(
-            axios.post('/review.php',{id:id})
+            axios.get(`/review.php?id=${id}`)
         )
     },
     fetchComments(id){
         return(
-            axios.post('/displayComment.php',{id:id})
+            axios.get(`/displayComment.php?id=${id}`)
         )
     },
     sendComment(jwt,id,comment){
@@ -73,6 +74,21 @@ const actions = {
             axios.post('/insertComment.php',{
                 id,jwt,comment
             })
+        )
+    },
+    sendMovie(id,desc,rev,rat){
+        return(
+            axios.post('/insertMovie.php',{
+                description:desc,
+                id:id,
+                review:rev,
+                rating:rat
+            })
+        )
+    },
+    deleteMovie(id){
+        return(
+            axios.post('/deleteMovie.php',{id:id})
         )
     }
 };

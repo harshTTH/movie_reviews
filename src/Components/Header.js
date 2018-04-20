@@ -6,6 +6,7 @@ import SignupForm from './SignupForm';
 import actions from '../actions';
 import {getUser,initUser} from '../store';
 import jwt from 'jsonwebtoken';
+import AddMovieForm from './AddMovieForm';
 
 var event = new CustomEvent("notifyChange", { "detail": "Example of an event" });
 
@@ -26,9 +27,9 @@ class Header extends React.Component{
             name:"",
             openLogin:false,
             openSignup:false,
+            openAddMovie:false,
             error:false
         }
-        console.log(getUser())
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -152,6 +153,19 @@ class Header extends React.Component{
                             <Dropdown text={getUser().name} icon="user circle" floating labeled button className='icon'>
                                 <Dropdown.Menu>
                                     <Dropdown.Item icon='arrow left' text='Logout' onClick={actions.handleLogout}/>
+                                    {getUser().email === "dummy@dummy.com" &&
+                                        <Modal
+                                            trigger={<Dropdown.Item icon='add' text='Add Movie'/>}
+                                            dimmer="blurring">
+                                            <Modal.Header>
+                                                <Icon name="add" size="large"/>
+                                                Add Movie
+                                            </Modal.Header>
+                                            <Modal.Content>
+                                                <AddMovieForm/>
+                                            </Modal.Content>
+                                        </Modal>
+                                    }
                                 </Dropdown.Menu>
                             </Dropdown>
                         )}

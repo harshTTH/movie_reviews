@@ -14,7 +14,6 @@ class HomePage extends React.Component{
     componentDidMount(){
         actions.fetchMovieIdList()
         .then(response=>{
-            console.log(response);
             this.setState({ids:response})
         });
     }
