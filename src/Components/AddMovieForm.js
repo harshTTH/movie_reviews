@@ -2,6 +2,7 @@ import React from 'react';
 import {Form,Header,Icon,Message} from 'semantic-ui-react';
 import actions from '../actions';
 
+// To add new movie in database
 class AddMovieForm extends React.Component{
     constructor(props){
         super(props);
@@ -76,7 +77,7 @@ class AddMovieForm extends React.Component{
                     <input name="id" placeholder="Enter Movie id" required onChange={this.handleChange} value={this.state.movie_id}/>
                     <Header dividing/>
                     <label>Description</label>
-                    <input name="desc" placeholder="Enter Description" required onChange={this.handleChange} value={this.state.desc}/>
+                    <input name="desc" placeholder="Enter description" required onChange={this.handleChange} value={this.state.desc}/>
                     <Header dividing/>
                     <label>{this.state.review.length}/1800</label>
                     <Form.TextArea name="rev" style={{height:"120px"}} onChange={this.handleChange} required value={this.state.review}/>
